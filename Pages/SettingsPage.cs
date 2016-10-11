@@ -73,7 +73,7 @@ namespace SecuritySampleApp
 
 			NavigationPage.SetTitleIcon(this,"cogwheel_navigation");
 
-			Title = $"Lane {laneModelTapped.ID} Settings";
+			Title = $"Lane {laneModelTapped.ID + 1} Settings";
 			Content = settingsStack;
 		}
 	}
