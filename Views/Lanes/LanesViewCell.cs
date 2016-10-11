@@ -28,7 +28,7 @@ namespace SecuritySampleApp
 					isOpenTextLavbel,
 					isOpenDataLabel
 				},
-				Style = Styles_Constants.StackLayoutStyle
+				Style = StylesConstants.StackLayoutStyle
 			};
 
 			var needsMaintenanceTextLabel = new Label
@@ -45,7 +45,7 @@ namespace SecuritySampleApp
 					needsMaintenanceTextLabel,
 					needsMaintenanceDataLabel
 				},
-				Style = Styles_Constants.StackLayoutStyle
+				Style = StylesConstants.StackLayoutStyle
 			};
 
 			var gridLayout = new Grid
