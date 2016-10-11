@@ -17,12 +17,12 @@ namespace SecuritySampleApp
 			var lanesLabel = new Label
 			{
 				Text = "Lanes",
-				Style = Styles_Constants.LabelStyle
+				Style = StylesConstants.LabelStyle
 			};
 			LanesButton = new Button
 			{
 				Image = "Road",
-				Style = Styles_Constants.ButtonStyle
+				Style = StylesConstants.ButtonStyle
 
 			};
 			LanesButton.Clicked += OnLanesButtonClick;
@@ -32,7 +32,7 @@ namespace SecuritySampleApp
 					lanesLabel,
 					LanesButton
 				},
-				Style = Styles_Constants.StackLayoutStyle
+				Style = StylesConstants.StackLayoutStyle
 			};
 			#endregion
 
@@ -40,12 +40,12 @@ namespace SecuritySampleApp
 			var aboutLabel = new Label
 			{
 				Text = "About",
-				Style = Styles_Constants.LabelStyle
+				Style = StylesConstants.LabelStyle
 			};
 			AboutButton = new Button
 			{
 				Image = "About",
-				Style = Styles_Constants.ButtonStyle
+				Style = StylesConstants.ButtonStyle
 			};
 			AboutButton.Clicked += OnAboutButtonClick;
 			var aboutStack = new StackLayout
@@ -54,14 +54,14 @@ namespace SecuritySampleApp
 					aboutLabel,
 					AboutButton
 				},
-				Style = Styles_Constants.StackLayoutStyle
+				Style = StylesConstants.StackLayoutStyle
 			};
 			#endregion
 
 			var titleLabel = new Label
 			{
 				Text = pageTitle,
-				Style = Styles_Constants.LabelStyle
+				Style = StylesConstants.LabelStyle
 			};
 
 			#region Create the Relative Layout
@@ -100,17 +100,17 @@ namespace SecuritySampleApp
 			var enableSwitchText = new Label
 			{
 				Text = "Disable Buttons",
-				Style = Styles_Constants.LabelStyle
+				Style = StylesConstants.LabelStyle
 			};
 			var enableSwitchButton = new Switch
 			{
-				Style = Styles_Constants.ButtonStyle
+				Style = StylesConstants.ButtonStyle
 			};
 			enableSwitchButton.Toggled += ToggleAllButtons;
 
 			var switchStackHorizontal = new StackLayout
 			{
-				Style = Styles_Constants.StackLayoutStyle,
+				Style = StylesConstants.StackLayoutStyle,
 				Orientation = StackOrientation.Horizontal,
 				Children = {
 					enableSwitchText,
