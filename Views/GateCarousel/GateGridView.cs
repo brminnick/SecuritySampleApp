@@ -9,92 +9,47 @@ namespace SecuritySampleApp
 
 		Button LanesButton, AboutButton;
 		//Button icons provided by www.flaticon.com 
-		public GateGridView(string pageTitle)
+		public GateGridView(string pageNumber, int numberOfPages)
 		{
 			//Initialie the ContentTitle field
-			ContentTitle = pageTitle;
-			#region Create the Lanes StackLayout
+			ContentTitle = pageNumber;
+			#region Create the Lanes Controls
 			var lanesLabel = new Label
 			{
 				Text = "Lanes",
 				Style = StylesConstants.LabelStyle
 			};
+
 			LanesButton = new Button
 			{
 				Image = "Road",
 				Style = StylesConstants.ButtonStyle
+			};
 
-			};
 			LanesButton.Clicked += OnLanesButtonClick;
-			var lanesStack = new StackLayout
-			{
-				Children ={
-					lanesLabel,
-					LanesButton
-				},
-				Style = StylesConstants.StackLayoutStyle
-			};
 			#endregion
 
-			#region Create the About StackLayout
+			#region Create the About Controls
 			var aboutLabel = new Label
 			{
 				Text = "About",
-				Style = StylesConstants.LabelStyle
+				Style = StylesConstants.LabelStyle,
 			};
+
 			AboutButton = new Button
 			{
 				Image = "About",
-				Style = StylesConstants.ButtonStyle
+				Style = StylesConstants.ButtonStyle,
 			};
 			AboutButton.Clicked += OnAboutButtonClick;
-			var aboutStack = new StackLayout
-			{
-				Children = {
-					aboutLabel,
-					AboutButton
-				},
-				Style = StylesConstants.StackLayoutStyle
-			};
+
 			#endregion
 
 			var titleLabel = new Label
 			{
-				Text = pageTitle,
+				Text = $"{pageNumber} of {numberOfPages}",
 				Style = StylesConstants.LabelStyle
 			};
-
-			#region Create the Relative Layout
-			var gateRelativeLayout = new RelativeLayout();
-			gateRelativeLayout.Children.Add(lanesStack,
-				Constraint.RelativeToParent((parent) =>
-				{
-					return parent.Width / 8;
-				}),
-				Constraint.RelativeToParent((parent) =>
-				{
-					return parent.Y + relativeLayoutPadding;
-				}),
-                Constraint.RelativeToParent((parent) =>
-				{
-					return parent.Width / 4;
-				})
-			);
-			gateRelativeLayout.Children.Add(aboutStack,
-				Constraint.RelativeToParent((parent) =>
-				{
-					return parent.Width * 5 / 8;
-				}),
-				Constraint.RelativeToParent((parent) =>
-				{
-					return parent.Y + relativeLayoutPadding;
-				}),
-                Constraint.RelativeToParent((parent) =>
-				{
-					return parent.Width / 4;
-				})
-			);
-			#endregion
 
 			#region Create Enable Button
 			var enableSwitchText = new Label
@@ -119,19 +74,94 @@ namespace SecuritySampleApp
 			};
 			#endregion
 
-			#region Create Stack Layout to include the title
-			var pageStack = new StackLayout
-			{
-				VerticalOptions = LayoutOptions.Center,
-				Children = {
-					gateRelativeLayout,
-					switchStackHorizontal,
-					titleLabel
-				}
-			};
-			#endregion	
+			#region Create the Relative Layout
+			var mainRelativeLayout = new RelativeLayout();
 
-			Content = pageStack;
+			Func<RelativeLayout, double> getswitchStackHorizonalWidth = (p) => switchStackHorizontal.Measure(mainRelativeLayout.Width, mainRelativeLayout.Height).Request.Width;
+			Func<RelativeLayout, double> getTitleLabelWidth = (p) => titleLabel.Measure(mainRelativeLayout.Width, mainRelativeLayout.Height).Request.Width;
+
+			mainRelativeLayout.Children.Add(lanesLabel,
+				Constraint.RelativeToParent((parent) =>
+				{
+					return parent.Width / 8;
+				}),
+				Constraint.RelativeToParent((parent) =>
+				{
+					return parent.Y + relativeLayoutPadding;
+				}),
+				Constraint.RelativeToParent((parent) =>
+				{
+					return parent.Width / 4;
+				})
+			);
+			mainRelativeLayout.Children.Add(LanesButton,
+				Constraint.RelativeToParent((parent) =>
+				{
+					return parent.Width / 8;
+				}),
+				Constraint.RelativeToView(lanesLabel, (parent, view) =>
+			 	{
+					 return view.Y + view.Height + relativeLayoutPadding;
+			 	}),
+				Constraint.RelativeToParent((parent) =>
+				{
+					return parent.Width / 4;
+				}),
+				Constraint.Constant(100)
+			);
+			mainRelativeLayout.Children.Add(aboutLabel,
+				Constraint.RelativeToParent((parent) =>
+				{
+					return parent.Width * 5 / 8;
+				}),
+				Constraint.RelativeToParent((parent) =>
+				{
+					return parent.Y + relativeLayoutPadding;
+				}),
+				Constraint.RelativeToParent((parent) =>
+				{
+					return parent.Width / 4;
+				})
+			);
+			mainRelativeLayout.Children.Add(AboutButton,
+				Constraint.RelativeToParent((parent) =>
+				{
+					return parent.Width * 5 / 8;
+				}),
+				Constraint.RelativeToView(lanesLabel, (parent, view) =>
+			 	{
+					 return view.Y + view.Height + relativeLayoutPadding;
+			 	}),
+				Constraint.RelativeToParent((parent) =>
+				{
+					return parent.Width / 4;
+				}),
+				Constraint.Constant(100)
+			);
+			mainRelativeLayout.Children.Add(switchStackHorizontal,
+				Constraint.RelativeToParent((parent) =>
+				{
+					return parent.Width / 2 - getswitchStackHorizonalWidth(parent) / 2;
+				}),
+				Constraint.RelativeToView(LanesButton, (parent, view) =>
+				{
+					 return view.Y + view.Height + relativeLayoutPadding * 4;
+				})
+			);
+
+			mainRelativeLayout.Children.Add(titleLabel,
+				Constraint.RelativeToParent((parent) =>
+				{
+					return parent.Width / 2 - getTitleLabelWidth(parent) / 2;
+				}),
+				Constraint.RelativeToView(switchStackHorizontal, (parent, view) =>
+				{
+					return view.Y + view.Height + relativeLayoutPadding * 4;
+				})
+			);
+			#endregion
+
+			Content = mainRelativeLayout;
 		}
 
 		async void OnLanesButtonClick(object sender, EventArgs e)

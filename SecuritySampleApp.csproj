@@ -33,7 +33,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Pages\GateCarouselPage.cs" />
+    <Compile Include="Pages\GatePage.cs" />
     <Compile Include="Views\GateCarousel\GateGridView.cs" />
     <Compile Include="Pages\SettingsPage.cs" />
     <Compile Include="Pages\AboutPage.cs" />
