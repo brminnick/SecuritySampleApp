@@ -14,19 +14,19 @@ namespace SecuritySampleApp
 				Source = "Road"
 			};
 
-			var isOpenTextLavbel = new Label
+			var isOpenTextLabel = new Label
 			{
 				Text = "Is Open",
 				FontAttributes = FontAttributes.Bold
 			};
-			var isOpenDataLabel = new Label();
-			isOpenDataLabel.SetBinding(Label.TextProperty, "IsOpen");
+			var isOpenSwitch = new Switch();
+			isOpenSwitch.SetBinding(Switch.IsToggledProperty, "IsOpen");
 
 			var isOpenStack = new StackLayout
 			{
 				Children = {
-					isOpenTextLavbel,
-					isOpenDataLabel
+					isOpenTextLabel,
+					isOpenSwitch
 				},
 				Style = StylesConstants.StackLayoutStyle
 			};
@@ -36,14 +36,14 @@ namespace SecuritySampleApp
 				Text = "Needs Maintenance",
 				FontAttributes = FontAttributes.Bold
 			};
-			var needsMaintenanceDataLabel = new Label();
-			needsMaintenanceDataLabel.SetBinding(Label.TextProperty, "NeedsMaintenance");
+			var needsMaintenanceSwitch = new Switch();
+			needsMaintenanceSwitch.SetBinding(Switch.IsToggledProperty, "NeedsMaintenance");
 
 			var needsMaintenanceStack = new StackLayout
 			{
 				Children = {
 					needsMaintenanceTextLabel,
-					needsMaintenanceDataLabel
+					needsMaintenanceSwitch
 				},
 				Style = StylesConstants.StackLayoutStyle
 			};

@@ -1,27 +1,23 @@
-﻿using System.Windows.Input;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-
-using Xamarin.Forms;
+﻿using System.Collections.Generic;
 
 namespace SecuritySampleApp
 {
-    public class LanesViewModel : BaseViewModel
-    {
+	public class LanesViewModel : BaseViewModel
+	{
 		List<LaneModel> _lanesList;
 
-        public List<LaneModel> LanesList
-        {
-            get { return _lanesList; }
-            set
-            {
+		public List<LaneModel> LanesList
+		{
+			get { return _lanesList; }
+			set
+			{
 				SetProperty<List<LaneModel>>(ref _lanesList, value);
-            }
-        }
+			}
+		}
 
-        public LanesViewModel()
-        {
-            LanesList = CreateLanes();
-        }
-    }
+		public LanesViewModel()
+		{
+			LanesList = CreateLanes();
+		}
+	}
 }

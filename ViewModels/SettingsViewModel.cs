@@ -15,8 +15,8 @@ namespace SecuritySampleApp
 
 		LaneModel laneModel;
 
-		bool _isOpen, _needsMaintenance, _timerEnabled;
-		string _ipAddress, _imageCellIcon, _toggleButtonText = _iconToggleDisabled;
+		bool _timerEnabled;
+		string _imageCellIcon, _toggleButtonText = _iconToggleDisabled;
 
 		public SettingsViewModel(LaneModel laneModelTapped)
 		{
@@ -45,7 +45,7 @@ namespace SecuritySampleApp
 			get { return laneModel.IsOpen; }
 			set
 			{
-				SetProperty<bool>(ref _isOpen, value, () => laneModel.IsOpen = value);
+				laneModel.IsOpen = value;
 			}
 		}
 
@@ -54,7 +54,7 @@ namespace SecuritySampleApp
 			get { return laneModel.NeedsMaintenance; }
 			set
 			{
-				SetProperty<bool>(ref _needsMaintenance, value, () => laneModel.NeedsMaintenance = value);
+				laneModel.NeedsMaintenance = value;
 			}
 		}
 
@@ -63,7 +63,7 @@ namespace SecuritySampleApp
 			get { return laneModel.IPAddress; }
 			set
 			{
-				SetProperty<string>(ref _ipAddress, value, () => laneModel.IPAddress = value);
+				laneModel.IPAddress = value;
 			}
 		}
 
