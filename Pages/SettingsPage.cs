@@ -14,7 +14,7 @@ namespace SecuritySampleApp
 			{
 				Text = "Is Open"
 			};
-			isOpenSwitch.SetBinding(SwitchCell.OnProperty,"IsOpen");
+			isOpenSwitch.SetBinding<SettingsViewModel>(SwitchCell.OnProperty, vm => vm.IsOpen);
 			#endregion
 
 			#region Create the Needs Maintenance Switch
@@ -22,7 +22,7 @@ namespace SecuritySampleApp
 			{
 				Text = "Needs Maintenance"
 			};
-			needsMaintenanceSwitch.SetBinding(SwitchCell.OnProperty,"NeedsMaintenance");
+			needsMaintenanceSwitch.SetBinding<SettingsViewModel>(SwitchCell.OnProperty, vm => vm.NeedsMaintenance);
 			#endregion
 
 			#region create the IP Address Entry
@@ -31,18 +31,18 @@ namespace SecuritySampleApp
 				Label = "IP Address",
 				HorizontalTextAlignment = TextAlignment.End
 			};
-			ipAddressText.SetBinding(EntryCell.TextProperty, "IPAddress");
+			ipAddressText.SetBinding<SettingsViewModel>(EntryCell.TextProperty, vm => vm.IPAddress);
 			#endregion
 
 			#region Create Image Cell
 			var imageCell = new ImageCell();
-			imageCell.SetBinding(ImageCell.ImageSourceProperty, "ImageCellIcon");
+			imageCell.SetBinding<SettingsViewModel>(ImageCell.ImageSourceProperty, vm => vm.ImageCellIcon);
 			#endregion
 
 			#region Create the Icon Toggle Button
 			var iconToggleButton = new Button();
-			iconToggleButton.SetBinding(Button.CommandProperty, "IconToggleButtonTapped");
-			iconToggleButton.SetBinding(Button.TextProperty, "ToggleButtonText");
+			iconToggleButton.SetBinding<SettingsViewModel>(Button.CommandProperty, vm => vm.IconToggleButtonTapped);
+			iconToggleButton.SetBinding<SettingsViewModel>(Button.TextProperty, vm => vm.ToggleButtonText);
 			#endregion
 
 			#region create the TableView
@@ -71,7 +71,7 @@ namespace SecuritySampleApp
 			};
 			#endregion
 
-			NavigationPage.SetTitleIcon(this,"cogwheel_navigation");
+			NavigationPage.SetTitleIcon(this, "cogwheel_navigation");
 
 			Title = $"Lane {laneModelTapped.ID + 1} Settings";
 			Content = settingsStack;

@@ -22,7 +22,7 @@ namespace SecuritySampleApp
 				ItemTemplate = new DataTemplate(typeof(LanesViewCell))
 			};
 			listView.IsPullToRefreshEnabled = true;
-			listView.SetBinding(ListView.ItemsSourceProperty, "LanesList");
+			listView.SetBinding<LanesViewModel>(ListView.ItemsSourceProperty, vm => vm.LanesList);
 
 			Title = $"Lanes {pageTitle}";
 
@@ -34,17 +34,17 @@ namespace SecuritySampleApp
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
-			
+
 			listView.ItemTapped += OnListViewItemTapped;
 			listView.Refreshing += HandleRefreshing;
-			
+
 			RefreshListView();
 		}
-		
+
 		protected override void OnDisappearing()
 		{
 			base.OnDisappearing();
-			
+
 			listView.ItemTapped -= OnListViewItemTapped;
 			listView.Refreshing -= HandleRefreshing;
 		}

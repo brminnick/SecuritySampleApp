@@ -1,5 +1,4 @@
 ﻿using Xamarin.Forms;
-using System;
 
 namespace SecuritySampleApp
 {
@@ -20,7 +19,7 @@ namespace SecuritySampleApp
 				FontAttributes = FontAttributes.Bold
 			};
 			var isOpenSwitch = new Switch();
-			isOpenSwitch.SetBinding(Switch.IsToggledProperty, "IsOpen");
+			isOpenSwitch.SetBinding<LaneModel>(Switch.IsToggledProperty, m => m.IsOpen);
 
 			var isOpenStack = new StackLayout
 			{
@@ -37,7 +36,7 @@ namespace SecuritySampleApp
 				FontAttributes = FontAttributes.Bold
 			};
 			var needsMaintenanceSwitch = new Switch();
-			needsMaintenanceSwitch.SetBinding(Switch.IsToggledProperty, "NeedsMaintenance");
+			needsMaintenanceSwitch.SetBinding<LaneModel>(Switch.IsToggledProperty, m => m.NeedsMaintenance);
 
 			var needsMaintenanceStack = new StackLayout
 			{
