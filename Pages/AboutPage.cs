@@ -25,11 +25,22 @@ namespace SecuritySampleApp
 
 			NavigationPage.SetTitleIcon(this, "About_navigation");
 
-			Padding = new Thickness(10, Device.OnPlatform(30, 10, 10), 10, 5);
+			Padding = GetPageThickness();
 
 			Title = $"About {pageTitle}";
 
 			Content = aboutStack;
+		}
+
+		Thickness GetPageThickness()
+		{
+			switch (Device.RuntimePlatform)
+			{
+				case Device.iOS:
+					return new Thickness(10, 30, 10, 5);
+				default:
+					return new Thickness(10, 10, 10, 5);
+			}
 		}
 	}
 }

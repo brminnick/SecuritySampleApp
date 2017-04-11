@@ -9,11 +9,22 @@ namespace SecuritySampleApp
 			//Instantiate a new GridView
 			var gridView = new GateGridView(pageTitle, numberOfPages);
 
-			Padding = new Thickness(10, Device.OnPlatform(30, 10, 10), 10, 5);
+			Padding = GetPageThickness();
 
 			Title = pageTitle;
 
 			Content = gridView;
+		}
+
+		Thickness GetPageThickness()
+		{
+			switch (Device.RuntimePlatform)
+			{
+				case Device.iOS:
+					return new Thickness(10, 30, 10, 5);
+				default:
+					return new Thickness(10, 10, 10, 5);
+			}
 		}
 	}
 }

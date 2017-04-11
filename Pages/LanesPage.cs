@@ -6,37 +6,37 @@ namespace SecuritySampleApp
 {
 	public class LanesPage : ContentPage
 	{
-		readonly LanesViewModel viewModel;
-		readonly ListView listView;
+		readonly LanesViewModel _viewModel;
+		readonly ListView _listView;
 
 		public LanesPage(string pageTitle)
 		{
 			//Instantiate the viewmodel for the Lanes Page
-			viewModel = new LanesViewModel();
-			BindingContext = viewModel;
+			_viewModel = new LanesViewModel();
+			BindingContext = _viewModel;
 
 			//Create the ListView for the Lanes Page
-			listView = new ListView
+			_listView = new ListView
 			{
 				RowHeight = 200,
 				ItemTemplate = new DataTemplate(typeof(LanesViewCell))
 			};
-			listView.IsPullToRefreshEnabled = true;
-			listView.SetBinding<LanesViewModel>(ListView.ItemsSourceProperty, vm => vm.LanesList);
+			_listView.IsPullToRefreshEnabled = true;
+			_listView.SetBinding(ListView.ItemsSourceProperty, nameof(_viewModel.LanesList));
 
 			Title = $"Lanes {pageTitle}";
 
 			NavigationPage.SetTitleIcon(this, "Road_navigation");
 
-			Content = listView;
+			Content = _listView;
 		}
 
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
 
-			listView.ItemTapped += OnListViewItemTapped;
-			listView.Refreshing += HandleRefreshing;
+			_listView.ItemTapped += OnListViewItemTapped;
+			_listView.Refreshing += HandleRefreshing;
 
 			RefreshListView();
 		}
@@ -45,8 +45,8 @@ namespace SecuritySampleApp
 		{
 			base.OnDisappearing();
 
-			listView.ItemTapped -= OnListViewItemTapped;
-			listView.Refreshing -= HandleRefreshing;
+			_listView.ItemTapped -= OnListViewItemTapped;
+			_listView.Refreshing -= HandleRefreshing;
 		}
 
 		async void OnListViewItemTapped(object sender, ItemTappedEventArgs e)
@@ -59,13 +59,13 @@ namespace SecuritySampleApp
 		void HandleRefreshing(object sender, EventArgs e)
 		{
 			RefreshListView();
-			listView.EndRefresh();
+			_listView.EndRefresh();
 		}
 
 		void RefreshListView()
 		{
-			listView.ItemsSource = null;
-			listView.SetBinding(ListView.ItemsSourceProperty, "LanesList");
+			_listView.ItemsSource = null;
+			_listView.SetBinding(ListView.ItemsSourceProperty, "LanesList");
 		}
 	}
 }
