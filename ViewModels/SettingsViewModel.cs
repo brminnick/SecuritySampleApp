@@ -6,95 +6,92 @@ using System;
 
 namespace SecuritySampleApp
 {
-	public class SettingsViewModel : BaseViewModel
-	{
-		const string _iconToggleDisabled = "Icon Toggle Disabled";
-		const string _iconToggleEnabled = "Icon Toggle Enabled";
-		const string _roadIconName = "Road";
-		const string _aboutIconName = "About";
+    public class SettingsViewModel : BaseViewModel
+    {
+        #region Constant Fields
+        const string _iconToggleDisabled = "Icon Toggle Disabled";
+        const string _iconToggleEnabled = "Icon Toggle Enabled";
+        const string _roadIconName = "Road";
+        const string _aboutIconName = "About";
+        #endregion
 
-		LaneModel laneModel;
+        #region Fields
+        bool _timerEnabled;
+        string _imageCellIcon, _toggleButtonText = _iconToggleDisabled;
+        LaneModel laneModel;
+        ICommand _iconToggleButtonCommand;
+        #endregion
 
-		bool _timerEnabled;
-		string _imageCellIcon, _toggleButtonText = _iconToggleDisabled;
+        #region Constructors
+        public SettingsViewModel(LaneModel laneModelTapped)
+        {
+            laneModel = laneModelTapped;
 
-		public SettingsViewModel(LaneModel laneModelTapped)
-		{
-			laneModel = laneModelTapped;
+            _toggleButtonText = _iconToggleDisabled;
+            _imageCellIcon = _aboutIconName;
 
-			_toggleButtonText = _iconToggleDisabled;
-			_imageCellIcon = _aboutIconName;
+        }
+        #endregion
 
-			IconToggleButtonTapped = new Command(async () =>
-			{
-				_timerEnabled = !_timerEnabled;
+        #region Properties
+        public ICommand IconToggleButtonCommand => _iconToggleButtonCommand ??
+            (_iconToggleButtonCommand = new Command(async () => await ExecuteIconToggleButtonCommand()));
 
-				if (_timerEnabled)
-					ToggleButtonText = _iconToggleEnabled;
-				else
-					ToggleButtonText = _iconToggleDisabled;
+        public bool IsOpen
+        {
+            get => laneModel.IsOpen;
+            set => laneModel.IsOpen = value;
+        }
 
-				await ToggleImage();
-			});
-		}
+        public bool NeedsMaintenance
+        {
+            get => laneModel.NeedsMaintenance;
+            set => laneModel.NeedsMaintenance = value;
+        }
 
-		public ICommand IconToggleButtonTapped { get; private set; }
+        public string IPAddress
+        {
+            get => laneModel.IPAddress;
+            set => laneModel.IPAddress = value;
+        }
 
-		public bool IsOpen
-		{
-			get { return laneModel.IsOpen; }
-			set
-			{
-				laneModel.IsOpen = value;
-			}
-		}
+        public string ImageCellIcon
+        {
+            get => _imageCellIcon;
+            set => SetProperty(ref _imageCellIcon, value);
+        }
 
-		public bool NeedsMaintenance
-		{
-			get { return laneModel.NeedsMaintenance; }
-			set
-			{
-				laneModel.NeedsMaintenance = value;
-			}
-		}
+        public string ToggleButtonText
+        {
+            get => _toggleButtonText;
+            set => SetProperty(ref _toggleButtonText, value);
+        }
+        #endregion
 
-		public string IPAddress
-		{
-			get { return laneModel.IPAddress; }
-			set
-			{
-				laneModel.IPAddress = value;
-			}
-		}
+        #region Methods
+        async Task ToggleImage()
+        {
+            while (_timerEnabled)
+            {
+                if (ImageCellIcon == _aboutIconName)
+                    ImageCellIcon = _roadIconName;
+                else
+                    ImageCellIcon = _aboutIconName;
+                await Task.Delay(2000);
+            }
+        }
 
-		public string ImageCellIcon
-		{
-			get { return _imageCellIcon; }
-			set
-			{
-				SetProperty<string>(ref _imageCellIcon, value);
-			}
-		}
+        async Task ExecuteIconToggleButtonCommand()
+        {
+            _timerEnabled = !_timerEnabled;
 
-		public string ToggleButtonText
-		{
-			get { return _toggleButtonText; }
-			set
-			{
-				SetProperty<string>(ref _toggleButtonText, value);
-			}
-		}
+            if (_timerEnabled)
+                ToggleButtonText = _iconToggleEnabled;
+            else
+                ToggleButtonText = _iconToggleDisabled;
 
-		async Task ToggleImage()
-		{
-			while (_timerEnabled)
-			{
-				if (ImageCellIcon == _aboutIconName)
-					ImageCellIcon = _roadIconName;
-				else
-					ImageCellIcon = _aboutIconName;
-				await Task.Delay(2000);
-			}
-		}
-	}
+            await ToggleImage();
+        }
+        #endregion
+    }
 }

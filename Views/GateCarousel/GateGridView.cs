@@ -2,182 +2,190 @@
 using Xamarin.Forms;
 namespace SecuritySampleApp
 {
-	public class GateGridView : ContentView
-	{
-		string ContentTitle;
-		const int relativeLayoutPadding = 10;
+    public class GateGridView : ContentView
+    {
+        #region Constant Fields
+        const int relativeLayoutPadding = 10;
+        readonly Button LanesButton, AboutButton;
+        #endregion
 
-		Button LanesButton, AboutButton;
-		//Button icons provided by www.flaticon.com 
-		public GateGridView(string pageNumber, int numberOfPages)
-		{
-			//Initialie the ContentTitle field
-			ContentTitle = pageNumber;
-			#region Create the Lanes Controls
-			var lanesLabel = new Label
-			{
-				Text = "Lanes",
-				Style = StylesConstants.LabelStyle
-			};
+        #region Fields
+        string _contentTitle;
+        #endregion
 
-			LanesButton = new Button
-			{
-				Image = "Road",
-				Style = StylesConstants.ButtonStyle
-			};
+        #region Constructors
+        public GateGridView(string pageNumber, int numberOfPages)
+        {
+            _contentTitle = pageNumber;
 
-			LanesButton.Clicked += OnLanesButtonClick;
-			#endregion
+            #region Create the Lanes Controls
+            var lanesLabel = new Label
+            {
+                Text = "Lanes",
+                Style = StylesConstants.LabelStyle
+            };
 
-			#region Create the About Controls
-			var aboutLabel = new Label
-			{
-				Text = "About",
-				Style = StylesConstants.LabelStyle,
-			};
+            LanesButton = new Button
+            {
+                Image = "Road",
+                Style = StylesConstants.ButtonStyle
+            };
 
-			AboutButton = new Button
-			{
-				Image = "About",
-				Style = StylesConstants.ButtonStyle,
-			};
-			AboutButton.Clicked += OnAboutButtonClick;
+            LanesButton.Clicked += OnLanesButtonClick;
+            #endregion
 
-			#endregion
+            #region Create the About Controls
+            var aboutLabel = new Label
+            {
+                Text = "About",
+                Style = StylesConstants.LabelStyle,
+            };
 
-			var titleLabel = new Label
-			{
-				Text = $"{pageNumber} of {numberOfPages}",
-				Style = StylesConstants.LabelStyle
-			};
+            AboutButton = new Button
+            {
+                Image = "About",
+                Style = StylesConstants.ButtonStyle,
+            };
+            AboutButton.Clicked += OnAboutButtonClick;
 
-			#region Create Enable Button
-			var enableSwitchText = new Label
-			{
-				Text = "Disable Buttons",
-				Style = StylesConstants.LabelStyle
-			};
-			var enableSwitchButton = new Switch
-			{
-				Style = StylesConstants.ButtonStyle
-			};
-			enableSwitchButton.Toggled += ToggleAllButtons;
+            #endregion
 
-			var switchStackHorizontal = new StackLayout
-			{
-				Style = StylesConstants.StackLayoutStyle,
-				Orientation = StackOrientation.Horizontal,
-				Children = {
-					enableSwitchText,
-					enableSwitchButton
-				}
-			};
-			#endregion
+            var titleLabel = new Label
+            {
+                Text = $"{pageNumber} of {numberOfPages}",
+                Style = StylesConstants.LabelStyle
+            };
 
-			#region Create the Relative Layout
-			var mainRelativeLayout = new RelativeLayout();
+            #region Create Enable Button
+            var enableSwitchText = new Label
+            {
+                Text = "Disable Buttons",
+                Style = StylesConstants.LabelStyle
+            };
+            var enableSwitchButton = new Switch
+            {
+                Style = StylesConstants.ButtonStyle
+            };
+            enableSwitchButton.Toggled += ToggleAllButtons;
 
-			Func<RelativeLayout, double> getswitchStackHorizonalWidth = (p) => switchStackHorizontal.Measure(mainRelativeLayout.Width, mainRelativeLayout.Height).Request.Width;
-			Func<RelativeLayout, double> getTitleLabelWidth = (p) => titleLabel.Measure(mainRelativeLayout.Width, mainRelativeLayout.Height).Request.Width;
+            var switchStackHorizontal = new StackLayout
+            {
+                Style = StylesConstants.StackLayoutStyle,
+                Orientation = StackOrientation.Horizontal,
+                Children = {
+                    enableSwitchText,
+                    enableSwitchButton
+                }
+            };
+            #endregion
 
-			mainRelativeLayout.Children.Add(lanesLabel,
-				Constraint.RelativeToParent((parent) =>
-				{
-					return parent.Width / 8;
-				}),
-				Constraint.RelativeToParent((parent) =>
-				{
-					return parent.Y + relativeLayoutPadding;
-				}),
-				Constraint.RelativeToParent((parent) =>
-				{
-					return parent.Width / 4;
-				})
-			);
-			mainRelativeLayout.Children.Add(LanesButton,
-				Constraint.RelativeToParent((parent) =>
-				{
-					return parent.Width / 8;
-				}),
-				Constraint.RelativeToView(lanesLabel, (parent, view) =>
-			 	{
-					 return view.Y + view.Height + relativeLayoutPadding;
-			 	}),
-				Constraint.RelativeToParent((parent) =>
-				{
-					return parent.Width / 4;
-				}),
-				Constraint.Constant(100)
-			);
-			mainRelativeLayout.Children.Add(aboutLabel,
-				Constraint.RelativeToParent((parent) =>
-				{
-					return parent.Width * 5 / 8;
-				}),
-				Constraint.RelativeToParent((parent) =>
-				{
-					return parent.Y + relativeLayoutPadding;
-				}),
-				Constraint.RelativeToParent((parent) =>
-				{
-					return parent.Width / 4;
-				})
-			);
-			mainRelativeLayout.Children.Add(AboutButton,
-				Constraint.RelativeToParent((parent) =>
-				{
-					return parent.Width * 5 / 8;
-				}),
-				Constraint.RelativeToView(lanesLabel, (parent, view) =>
-			 	{
-					 return view.Y + view.Height + relativeLayoutPadding;
-			 	}),
-				Constraint.RelativeToParent((parent) =>
-				{
-					return parent.Width / 4;
-				}),
-				Constraint.Constant(100)
-			);
-			mainRelativeLayout.Children.Add(switchStackHorizontal,
-				Constraint.RelativeToParent((parent) =>
-				{
-					return parent.Width / 2 - getswitchStackHorizonalWidth(parent) / 2;
-				}),
-				Constraint.RelativeToView(LanesButton, (parent, view) =>
-				{
-					 return view.Y + view.Height + relativeLayoutPadding * 4;
-				})
-			);
+            #region Create the Relative Layout
+            var mainRelativeLayout = new RelativeLayout();
 
-			mainRelativeLayout.Children.Add(titleLabel,
-				Constraint.RelativeToParent((parent) =>
-				{
-					return parent.Width / 2 - getTitleLabelWidth(parent) / 2;
-				}),
-				Constraint.RelativeToView(switchStackHorizontal, (parent, view) =>
-				{
-					return view.Y + view.Height + relativeLayoutPadding * 4;
-				})
-			);
-			#endregion
+            Func<RelativeLayout, double> getswitchStackHorizonalWidth = (p) => switchStackHorizontal.Measure(mainRelativeLayout.Width, mainRelativeLayout.Height).Request.Width;
+            Func<RelativeLayout, double> getTitleLabelWidth = (p) => titleLabel.Measure(mainRelativeLayout.Width, mainRelativeLayout.Height).Request.Width;
 
-			Content = mainRelativeLayout;
-		}
+            mainRelativeLayout.Children.Add(lanesLabel,
+                Constraint.RelativeToParent((parent) =>
+                {
+                    return parent.Width / 8;
+                }),
+                Constraint.RelativeToParent((parent) =>
+                {
+                    return parent.Y + relativeLayoutPadding;
+                }),
+                Constraint.RelativeToParent((parent) =>
+                {
+                    return parent.Width / 4;
+                })
+            );
+            mainRelativeLayout.Children.Add(LanesButton,
+                Constraint.RelativeToParent((parent) =>
+                {
+                    return parent.Width / 8;
+                }),
+                Constraint.RelativeToView(lanesLabel, (parent, view) =>
+                 {
+                     return view.Y + view.Height + relativeLayoutPadding;
+                 }),
+                Constraint.RelativeToParent((parent) =>
+                {
+                    return parent.Width / 4;
+                }),
+                Constraint.Constant(100)
+            );
+            mainRelativeLayout.Children.Add(aboutLabel,
+                Constraint.RelativeToParent((parent) =>
+                {
+                    return parent.Width * 5 / 8;
+                }),
+                Constraint.RelativeToParent((parent) =>
+                {
+                    return parent.Y + relativeLayoutPadding;
+                }),
+                Constraint.RelativeToParent((parent) =>
+                {
+                    return parent.Width / 4;
+                })
+            );
+            mainRelativeLayout.Children.Add(AboutButton,
+                Constraint.RelativeToParent((parent) =>
+                {
+                    return parent.Width * 5 / 8;
+                }),
+                Constraint.RelativeToView(lanesLabel, (parent, view) =>
+                 {
+                     return view.Y + view.Height + relativeLayoutPadding;
+                 }),
+                Constraint.RelativeToParent((parent) =>
+                {
+                    return parent.Width / 4;
+                }),
+                Constraint.Constant(100)
+            );
+            mainRelativeLayout.Children.Add(switchStackHorizontal,
+                Constraint.RelativeToParent((parent) =>
+                {
+                    return parent.Width / 2 - getswitchStackHorizonalWidth(parent) / 2;
+                }),
+                Constraint.RelativeToView(LanesButton, (parent, view) =>
+                {
+                    return view.Y + view.Height + relativeLayoutPadding * 4;
+                })
+            );
 
-		async void OnLanesButtonClick(object sender, EventArgs e)
-		{
-			await Navigation.PushAsync(new LanesPage(ContentTitle));
-		}
+            mainRelativeLayout.Children.Add(titleLabel,
+                Constraint.RelativeToParent((parent) =>
+                {
+                    return parent.Width / 2 - getTitleLabelWidth(parent) / 2;
+                }),
+                Constraint.RelativeToView(switchStackHorizontal, (parent, view) =>
+                {
+                    return view.Y + view.Height + relativeLayoutPadding * 4;
+                })
+            );
+            #endregion
 
-		async void OnAboutButtonClick(object sender, EventArgs e)
-		{
-			await Navigation.PushAsync(new AboutPage(ContentTitle));
-		}
-		void ToggleAllButtons(object sender, EventArgs e)
-		{
-			AboutButton.IsEnabled = !AboutButton.IsEnabled;
-			LanesButton.IsEnabled = !LanesButton.IsEnabled;
-		}
-	}
+            Content = mainRelativeLayout;
+        }
+        #endregion
+
+        #region Methods
+        async void OnLanesButtonClick(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new LanesPage(_contentTitle));
+        }
+
+        async void OnAboutButtonClick(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AboutPage(_contentTitle));
+        }
+        void ToggleAllButtons(object sender, EventArgs e)
+        {
+            AboutButton.IsEnabled = !AboutButton.IsEnabled;
+            LanesButton.IsEnabled = !LanesButton.IsEnabled;
+        }
+        #endregion
+    }
 }
 

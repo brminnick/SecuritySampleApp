@@ -6,7 +6,6 @@ namespace SecuritySampleApp
 	{
 		public GatePage(string pageTitle, int numberOfPages)
 		{
-			//Instantiate a new GridView
 			var gridView = new GateGridView(pageTitle, numberOfPages);
 
 			Padding = GetPageThickness();

@@ -2,22 +2,23 @@
 
 namespace SecuritySampleApp
 {
-	public class LanesViewModel : BaseViewModel
-	{
-		List<LaneModel> _lanesList;
+    public class LanesViewModel : BaseViewModel
+    {
+        #region Fields
+        List<LaneModel> _lanesList;
+        #endregion
 
-		public List<LaneModel> LanesList
-		{
-			get { return _lanesList; }
-			set
-			{
-				SetProperty<List<LaneModel>>(ref _lanesList, value);
-			}
-		}
+        #region Constructors
+        public LanesViewModel() =>
+            LanesList = CreateLanes();
+        #endregion
 
-		public LanesViewModel()
-		{
-			LanesList = CreateLanes();
-		}
-	}
+        #region Properties
+        public List<LaneModel> LanesList
+        {
+            get => _lanesList;
+            set => SetProperty(ref _lanesList, value);
+        }
+        #endregion
+    }
 }

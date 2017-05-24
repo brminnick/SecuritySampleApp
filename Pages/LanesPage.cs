@@ -11,11 +11,9 @@ namespace SecuritySampleApp
 
 		public LanesPage(string pageTitle)
 		{
-			//Instantiate the viewmodel for the Lanes Page
 			_viewModel = new LanesViewModel();
 			BindingContext = _viewModel;
 
-			//Create the ListView for the Lanes Page
 			_listView = new ListView
 			{
 				RowHeight = 200,
@@ -51,7 +49,6 @@ namespace SecuritySampleApp
 
 		async void OnListViewItemTapped(object sender, ItemTappedEventArgs e)
 		{
-			//Handle the button click
 			var laneTapped = (LaneModel)e.Item;
 			await Navigation.PushAsync(new SettingsPage(laneTapped));
 		}

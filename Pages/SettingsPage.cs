@@ -41,7 +41,7 @@ namespace SecuritySampleApp
 
 			#region Create the Icon Toggle Button
 			var iconToggleButton = new Button();
-			iconToggleButton.SetBinding(Button.CommandProperty, nameof(viewModel.IconToggleButtonTapped));
+			iconToggleButton.SetBinding(Button.CommandProperty, nameof(viewModel.IconToggleButtonCommand));
 			iconToggleButton.SetBinding(Button.TextProperty, nameof(viewModel.ToggleButtonText));
 			#endregion
 
