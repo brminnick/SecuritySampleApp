@@ -39,7 +39,7 @@ namespace SecuritySampleApp
             set => SaveToSettings(_ipAddressSettingsKey, value);
         }
 
-        protected static ISettings AppSettings => CrossSettings.Current;
+        static ISettings AppSettings => CrossSettings.Current;
 
         void SaveToSettings<T>(string key, T value) =>
             AppSettings.AddOrUpdateValue(key, value);

@@ -9,8 +9,7 @@ namespace SecuritySampleApp
         #endregion
 
         #region Constructors
-        public LanesViewModel() =>
-            LanesList = CreateLanes();
+        public LanesViewModel() => LanesList = CreateLanes();
         #endregion
 
         #region Properties

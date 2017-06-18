@@ -29,7 +29,6 @@ namespace SecuritySampleApp
 
             _toggleButtonText = _iconToggleDisabled;
             _imageCellIcon = _aboutIconName;
-
         }
         #endregion
 

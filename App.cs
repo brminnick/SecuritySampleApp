@@ -6,7 +6,6 @@ namespace SecuritySampleApp
 	{
 		public App()
 		{
-			// Create 3 Pages to be included in the main carousel page
 			var carouselPage1 = new GatePage("Page 1", 3)
 			{
 				BackgroundColor = Color.Maroon
@@ -30,21 +29,6 @@ namespace SecuritySampleApp
 			};
 			//Set the Main Page to be the Carousel Page with Navigation capabilities
 			MainPage = new NavigationPage(mainCarouselPage);
-		}
-
-		protected override void OnStart()
-		{
-			// Handle when your app starts
-		}
-
-		protected override void OnSleep()
-		{
-			// Handle when your app sleeps
-		}
-
-		protected override void OnResume()
-		{
-			// Handle when your app resumes
 		}
 	}
 }
