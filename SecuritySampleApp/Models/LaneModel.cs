@@ -18,31 +18,28 @@ namespace SecuritySampleApp
             _ipAddressSettingsKey = $"{SettingsConstants.IPAddressKey}{ID}";
         }
 
-        public int ID { get; set; }
+        public int ID { get; }
 
         public bool IsOpen
         {
             get => AppSettings.GetValueOrDefault(_isOpenSettingsKey, SettingsConstants.DefaultBool);
-            set => SaveToSettings(_isOpenSettingsKey, value);
+            set => AppSettings.AddOrUpdateValue(_isOpenSettingsKey, value);
         }
 
 
         public bool NeedsMaintenance
         {
             get => AppSettings.GetValueOrDefault(_needsMaintenanceSettingsKey, SettingsConstants.DefaultBool);
-            set => SaveToSettings(_needsMaintenanceSettingsKey, value);
+            set => AppSettings.AddOrUpdateValue(_needsMaintenanceSettingsKey, value);
         }
 
         public string IPAddress
         {
             get => AppSettings.GetValueOrDefault(_ipAddressSettingsKey, SettingsConstants.DefaultString);
-            set => SaveToSettings(_ipAddressSettingsKey, value);
+            set => AppSettings.AddOrUpdateValue(_ipAddressSettingsKey, value);
         }
 
         static ISettings AppSettings => CrossSettings.Current;
-
-        void SaveToSettings<T>(string key, T value) =>
-            AppSettings.AddOrUpdateValue(key, value);
     }
 }
 
