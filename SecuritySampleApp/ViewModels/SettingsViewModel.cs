@@ -1,8 +1,9 @@
-﻿using System.Windows.Input;
+using System.Windows.Input;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using System;
+using AsyncAwaitBestPractices.MVVM;
 
 namespace SecuritySampleApp
 {
@@ -13,19 +14,19 @@ namespace SecuritySampleApp
         const string _iconToggleEnabled = "Icon Toggle Enabled";
         const string _roadIconName = "Road";
         const string _aboutIconName = "About";
+        readonly LaneModel _laneModel;
         #endregion
 
         #region Fields
         bool _timerEnabled;
         string _imageCellIcon, _toggleButtonText = _iconToggleDisabled;
-        LaneModel laneModel;
         ICommand _iconToggleButtonCommand;
         #endregion
 
         #region Constructors
         public SettingsViewModel(LaneModel laneModelTapped)
         {
-            laneModel = laneModelTapped;
+            _laneModel = laneModelTapped;
 
             _toggleButtonText = _iconToggleDisabled;
             _imageCellIcon = _aboutIconName;
@@ -34,24 +35,24 @@ namespace SecuritySampleApp
 
         #region Properties
         public ICommand IconToggleButtonCommand => _iconToggleButtonCommand ??
-            (_iconToggleButtonCommand = new Command(async () => await ExecuteIconToggleButtonCommand()));
+            (_iconToggleButtonCommand = new AsyncCommand(ExecuteIconToggleButtonCommand, continueOnCapturedContext: false));
 
         public bool IsOpen
         {
-            get => laneModel.IsOpen;
-            set => laneModel.IsOpen = value;
+            get => _laneModel.IsOpen;
+            set => _laneModel.IsOpen = value;
         }
 
         public bool NeedsMaintenance
         {
-            get => laneModel.NeedsMaintenance;
-            set => laneModel.NeedsMaintenance = value;
+            get => _laneModel.NeedsMaintenance;
+            set => _laneModel.NeedsMaintenance = value;
         }
 
         public string IPAddress
         {
-            get => laneModel.IPAddress;
-            set => laneModel.IPAddress = value;
+            get => _laneModel.IPAddress;
+            set => _laneModel.IPAddress = value;
         }
 
         public string ImageCellIcon

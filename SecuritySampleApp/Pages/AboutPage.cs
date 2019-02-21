@@ -1,9 +1,9 @@
-﻿using Xamarin.Forms;
+using Xamarin.Forms;
 
 namespace SecuritySampleApp
 {
-	public class AboutPage : ContentPage
-	{
+	public class AboutPage : BaseContentPage
+    {
 		public AboutPage(string pageTitle)
 		{
 			var aboutLabel = new Label

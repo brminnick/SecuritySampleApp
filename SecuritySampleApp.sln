@@ -2,9 +2,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecuritySampleApp.iOS", "iOS\SecuritySampleApp.iOS.csproj", "{6D8F6312-53A8-4310-8BEE-05DD95118222}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecuritySampleApp.iOS", "SecuritySampleApp.iOS\SecuritySampleApp.iOS.csproj", "{6D8F6312-53A8-4310-8BEE-05DD95118222}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecuritySampleApp.Droid", "Droid\SecuritySampleApp.Droid.csproj", "{CEA43182-8837-47F8-9FC9-8006894CEAB0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecuritySampleApp.Droid", "SecuritySampleApp.Droid\SecuritySampleApp.Droid.csproj", "{CEA43182-8837-47F8-9FC9-8006894CEAB0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecuritySampleApp", "SecuritySampleApp\SecuritySampleApp.csproj", "{C33EA83F-FEED-4259-8A19-3422BBFC3A71}"
 EndProject

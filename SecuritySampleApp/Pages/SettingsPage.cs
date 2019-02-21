@@ -1,9 +1,9 @@
-﻿using Xamarin.Forms;
+using Xamarin.Forms;
 
 namespace SecuritySampleApp
 {
-	public class SettingsPage : ContentPage
-	{
+	public class SettingsPage : BaseContentPage
+    {
 		public SettingsPage(LaneModel laneModelTapped)
 		{
 			var viewModel = new SettingsViewModel(laneModelTapped);

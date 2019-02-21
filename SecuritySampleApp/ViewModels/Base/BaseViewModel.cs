@@ -1,13 +1,20 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using AsyncAwaitBestPractices;
 
 namespace SecuritySampleApp
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        readonly WeakEventManager _propertyChangedEventManager = new WeakEventManager();
+
+        event PropertyChangedEventHandler INotifyPropertyChanged.PropertyChanged
+        {
+            add => _propertyChangedEventManager.AddEventHandler(value);
+            remove => _propertyChangedEventManager.RemoveEventHandler(value);
+        }
 
         protected void SetProperty<T>(ref T backingStore, T value, Action onChanged = null, [CallerMemberName] string propertyname = "")
         {
@@ -21,20 +28,7 @@ namespace SecuritySampleApp
             OnPropertyChanged(propertyname);
         }
 
-        protected static List<LaneModel> CreateLanes()
-        {
-            var laneList = new List<LaneModel>();
-
-            for (int i = 0; i < 5; i++)
-            {
-                var laneModel = new LaneModel(i);
-                laneList.Add(laneModel);
-            }
-
-            return laneList;
-        }
-
         void OnPropertyChanged([CallerMemberName]string name = "") =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            _propertyChangedEventManager.HandleEvent(this, new PropertyChangedEventArgs(name), nameof(INotifyPropertyChanged.PropertyChanged));
     }
 }

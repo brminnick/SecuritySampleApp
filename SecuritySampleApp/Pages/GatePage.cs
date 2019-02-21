@@ -1,9 +1,9 @@
-﻿using Xamarin.Forms;
+using Xamarin.Forms;
 
 namespace SecuritySampleApp
 {
-	public class GatePage : ContentPage
-	{
+	public class GatePage : BaseContentPage
+    {
 		public GatePage(string pageTitle, int numberOfPages)
 		{
 			var gridView = new GateGridView(pageTitle, numberOfPages);

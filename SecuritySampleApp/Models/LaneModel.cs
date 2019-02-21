@@ -1,45 +1,42 @@
-﻿using Plugin.Settings;
-using Plugin.Settings.Abstractions;
+using Xamarin.Essentials;
 
 namespace SecuritySampleApp
 {
     public class LaneModel
     {
-        string _isOpenSettingsKey;
-        string _ipAddressSettingsKey;
-        string _needsMaintenanceSettingsKey;
+        readonly string _isOpenKey;
+        readonly string _ipAddressKey;
+        readonly string _needsMaintenanceKey;
 
         public LaneModel(int id)
         {
             ID = id;
 
-            _needsMaintenanceSettingsKey = $"{SettingsConstants.NeedsMaintenanceKey}{ID}";
-            _isOpenSettingsKey = $"{SettingsConstants.IsOpenKey}{ID}";
-            _ipAddressSettingsKey = $"{SettingsConstants.IPAddressKey}{ID}";
+            _needsMaintenanceKey = $"{nameof(NeedsMaintenance)}{ID}";
+            _isOpenKey = $"{nameof(IsOpen)}{ID}";
+            _ipAddressKey = $"{nameof(IPAddress)}{ID}";
         }
 
         public int ID { get; }
 
         public bool IsOpen
         {
-            get => AppSettings.GetValueOrDefault(_isOpenSettingsKey, SettingsConstants.DefaultBool);
-            set => AppSettings.AddOrUpdateValue(_isOpenSettingsKey, value);
+            get => Preferences.Get(_isOpenKey, false);
+            set => Preferences.Set(_isOpenKey, value);
         }
 
 
         public bool NeedsMaintenance
         {
-            get => AppSettings.GetValueOrDefault(_needsMaintenanceSettingsKey, SettingsConstants.DefaultBool);
-            set => AppSettings.AddOrUpdateValue(_needsMaintenanceSettingsKey, value);
+            get => Preferences.Get(_needsMaintenanceKey, false);
+            set => Preferences.Set(_needsMaintenanceKey, value);
         }
 
         public string IPAddress
         {
-            get => AppSettings.GetValueOrDefault(_ipAddressSettingsKey, SettingsConstants.DefaultString);
-            set => AppSettings.AddOrUpdateValue(_ipAddressSettingsKey, value);
+            get => Preferences.Get(_ipAddressKey, string.Empty);
+            set => Preferences.Set(_ipAddressKey, value);
         }
-
-        static ISettings AppSettings => CrossSettings.Current;
     }
 }
 
