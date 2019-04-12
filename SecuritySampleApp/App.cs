@@ -1,5 +1,4 @@
 using Xamarin.Forms;
-using Xamarin.Forms.PlatformConfiguration;
 
 namespace SecuritySampleApp
 {
@@ -28,6 +27,7 @@ namespace SecuritySampleApp
 				},
 				Title = "Carousel Page"
 			};
+
 			//Set the Main Page to be the Carousel Page with Navigation capabilities
 			MainPage = new NavigationPage(mainCarouselPage);
 		}
