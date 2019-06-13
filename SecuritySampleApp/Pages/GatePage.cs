@@ -1,18 +1,18 @@
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace SecuritySampleApp
 {
-	public class GatePage : BaseContentPage
+	class GatePage : BaseContentPage
     {
 		public GatePage(string pageTitle, int numberOfPages)
 		{
-			var gridView = new GateGridView(pageTitle, numberOfPages);
+			var gateGridView = new GateGridView(pageTitle, numberOfPages);
 
 			Padding = GetPageThickness();
 
 			Title = pageTitle;
 
-			Content = gridView;
+			Content = gateGridView;
 		}
 
 		Thickness GetPageThickness()

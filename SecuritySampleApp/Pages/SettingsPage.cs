@@ -1,40 +1,39 @@
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace SecuritySampleApp
 {
-	public class SettingsPage : BaseContentPage
+	class SettingsPage : BaseContentPage
     {
 		public SettingsPage(LaneModel laneModelTapped)
 		{
-			var viewModel = new SettingsViewModel(laneModelTapped);
-			BindingContext = viewModel;
+			BindingContext = new SettingsViewModel(laneModelTapped);
 
-			var isOpenSwitch = new SwitchCell
+            var isOpenSwitch = new SwitchCell
 			{
 				Text = "Is Open"
 			};
-			isOpenSwitch.SetBinding(SwitchCell.OnProperty, nameof(viewModel.IsOpen));
+			isOpenSwitch.SetBinding(SwitchCell.OnProperty, nameof(SettingsViewModel.IsOpen));
 
 			var needsMaintenanceSwitch = new SwitchCell
 			{
 				Text = "Needs Maintenance"
 			};
-			needsMaintenanceSwitch.SetBinding(SwitchCell.OnProperty, nameof(viewModel.NeedsMaintenance));
+			needsMaintenanceSwitch.SetBinding(SwitchCell.OnProperty, nameof(SettingsViewModel.NeedsMaintenance));
 
 			var ipAddressText = new EntryCell
 			{
 				Label = "IP Address",
 				HorizontalTextAlignment = TextAlignment.End
 			};
-			ipAddressText.SetBinding(EntryCell.TextProperty, nameof(viewModel.IPAddress));
+			ipAddressText.SetBinding(EntryCell.TextProperty, nameof(SettingsViewModel.IPAddress));
 
 			var imageCell = new ImageCell();
-			imageCell.SetBinding(ImageCell.ImageSourceProperty, nameof(viewModel.ImageCellIcon));
+			imageCell.SetBinding(ImageCell.ImageSourceProperty, nameof(SettingsViewModel.ImageCellIcon));
 
 		
 			var iconToggleButton = new Button();
-			iconToggleButton.SetBinding(Button.CommandProperty, nameof(viewModel.IconToggleButtonCommand));
-			iconToggleButton.SetBinding(Button.TextProperty, nameof(viewModel.ToggleButtonText));
+			iconToggleButton.SetBinding(Button.CommandProperty, nameof(SettingsViewModel.IconToggleButtonCommand));
+			iconToggleButton.SetBinding(Button.TextProperty, nameof(SettingsViewModel.ToggleButtonText));
 
 			var tableView = new TableView
 			{
@@ -58,7 +57,7 @@ namespace SecuritySampleApp
 				}
 			};
 
-			NavigationPage.SetTitleIcon(this, "cogwheel_navigation");
+			NavigationPage.SetTitleIconImageSource(this, "cogwheel_navigation");
 
 			Title = $"Lane {laneModelTapped.ID + 1} Settings";
 			Content = settingsStack;

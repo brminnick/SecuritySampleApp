@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -6,7 +6,7 @@ using AsyncAwaitBestPractices;
 
 namespace SecuritySampleApp
 {
-    public abstract class BaseViewModel : INotifyPropertyChanged
+    abstract class BaseViewModel : INotifyPropertyChanged
     {
         readonly WeakEventManager _propertyChangedEventManager = new WeakEventManager();
 

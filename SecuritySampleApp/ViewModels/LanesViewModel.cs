@@ -1,19 +1,28 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
+using AsyncAwaitBestPractices.MVVM;
 
 namespace SecuritySampleApp
 {
-    public class LanesViewModel : BaseViewModel
+    class LanesViewModel : BaseViewModel
     {
         #region Fields
+        bool _isRefreshing;
         ICommand _refreshCommand;
         List<LaneModel> _lanesList;
         #endregion
 
         #region Properties
         public ICommand RefreshCommand => _refreshCommand ??
-            (_refreshCommand = new Command(() => ExecuteRefreshCommand()));
+            (_refreshCommand = new AsyncCommand(ExecuteRefreshCommand, continueOnCapturedContext: false));
+
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set => SetProperty(ref _isRefreshing, value);
+        }
 
         public List<LaneModel> LanesList
         {
@@ -23,19 +32,25 @@ namespace SecuritySampleApp
         #endregion
 
         #region Methods
-        void ExecuteRefreshCommand() => LanesList = CreateLanes();
-
-        List<LaneModel> CreateLanes()
+        async Task ExecuteRefreshCommand()
         {
-            var laneList = new List<LaneModel>();
+            var minimumRefreshTimeTask = Task.Delay(500);
 
-            for (int i = 0; i < 5; i++)
+            try
             {
-                var laneModel = new LaneModel(i);
-                laneList.Add(laneModel);
+                LanesList = CreateLanes().ToList();
             }
+            finally
+            {
+                await minimumRefreshTimeTask.ConfigureAwait(false);
+                IsRefreshing = false;
+            }
+        }
 
-            return laneList;
+        IEnumerable<LaneModel> CreateLanes()
+        {
+            for (int i = 0; i < 5; i++)
+                yield return new LaneModel(i);
         }
         #endregion
     }

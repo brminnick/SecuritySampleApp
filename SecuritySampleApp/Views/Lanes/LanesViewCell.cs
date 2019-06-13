@@ -6,8 +6,6 @@ namespace SecuritySampleApp
 	{
 		public LanesViewCell()
 		{
-			var model = BindingContext as LaneModel;
-
 			var laneImage = new Image
 			{
 				HeightRequest = 150,
@@ -21,7 +19,7 @@ namespace SecuritySampleApp
 				FontAttributes = FontAttributes.Bold
 			};
 			var isOpenSwitch = new Switch();
-			isOpenSwitch.SetBinding(Switch.IsToggledProperty, nameof(model.IsOpen));
+			isOpenSwitch.SetBinding(Switch.IsToggledProperty, nameof(LaneModel.IsOpen));
 
 			var isOpenStack = new StackLayout
 			{
@@ -38,7 +36,7 @@ namespace SecuritySampleApp
 				FontAttributes = FontAttributes.Bold
 			};
 			var needsMaintenanceSwitch = new Switch();
-			needsMaintenanceSwitch.SetBinding(Switch.IsToggledProperty, nameof(model.NeedsMaintenance));
+			needsMaintenanceSwitch.SetBinding(Switch.IsToggledProperty, nameof(LaneModel.NeedsMaintenance));
 
 			var needsMaintenanceStack = new StackLayout
 			{

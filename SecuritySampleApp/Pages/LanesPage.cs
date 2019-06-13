@@ -1,31 +1,32 @@
-using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace SecuritySampleApp
 {
-    public class LanesPage : BaseContentPage
+    class LanesPage : BaseContentPage
     {
         #region Constant Fields
         readonly ListView _listView;
-        readonly LanesViewModel _lanesViewModel = new LanesViewModel();
         #endregion
 
         #region Constructors
         public LanesPage(string pageTitle)
         {
-            BindingContext = _lanesViewModel;
+            BindingContext = new LanesViewModel();
 
             _listView = new ListView
             {
                 RowHeight = 200,
-                ItemTemplate = new DataTemplate(typeof(LanesViewCell))
+                ItemTemplate = new DataTemplate(typeof(LanesViewCell)),
+                IsPullToRefreshEnabled = true,
             };
             _listView.ItemTapped += OnListViewItemTapped;
             _listView.SetBinding(ListView.ItemsSourceProperty, nameof(LanesViewModel.LanesList));
+            _listView.SetBinding(ListView.IsRefreshingProperty, nameof(LanesViewModel.IsRefreshing));
+            _listView.SetBinding(ListView.RefreshCommandProperty, nameof(LanesViewModel.RefreshCommand));
 
             Title = $"Lanes {pageTitle}";
 
-            NavigationPage.SetTitleIcon(this, "Road_navigation");
+            NavigationPage.SetTitleIconImageSource(this, "Road_navigation");
 
             Content = _listView;
         }
@@ -36,17 +37,16 @@ namespace SecuritySampleApp
         {
             base.OnAppearing();
 
-            _lanesViewModel.RefreshCommand?.Execute(null);
+            _listView.BeginRefresh();
         }
 
         async void OnListViewItemTapped(object sender, ItemTappedEventArgs e)
         {
-            var laneTapped = (LaneModel)e.Item;
-            var listView = sender as ListView;
+            if (sender is ListView listView)
+                listView.SelectedItem = null;
 
-            await Navigation.PushAsync(new SettingsPage(laneTapped));
-
-            listView.SelectedItem = null;
+            if (e.Item is LaneModel laneModelTapped)
+                await Navigation.PushAsync(new SettingsPage(laneModelTapped));
         }
         #endregion
     }

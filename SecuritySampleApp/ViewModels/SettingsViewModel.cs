@@ -1,13 +1,11 @@
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.Threading.Tasks;
 
-using Xamarin.Forms;
-using System;
 using AsyncAwaitBestPractices.MVVM;
 
 namespace SecuritySampleApp
 {
-    public class SettingsViewModel : BaseViewModel
+    class SettingsViewModel : BaseViewModel
     {
         #region Constant Fields
         const string _iconToggleDisabled = "Icon Toggle Disabled";
@@ -73,11 +71,12 @@ namespace SecuritySampleApp
         {
             while (_timerEnabled)
             {
-                if (ImageCellIcon == _aboutIconName)
+                if (ImageCellIcon is _aboutIconName)
                     ImageCellIcon = _roadIconName;
                 else
                     ImageCellIcon = _aboutIconName;
-                await Task.Delay(2000);
+                
+                await Task.Delay(2000).ConfigureAwait(false);
             }
         }
 
@@ -90,7 +89,7 @@ namespace SecuritySampleApp
             else
                 ToggleButtonText = _iconToggleDisabled;
 
-            await ToggleImage();
+            await ToggleImage().ConfigureAwait(false);
         }
         #endregion
     }

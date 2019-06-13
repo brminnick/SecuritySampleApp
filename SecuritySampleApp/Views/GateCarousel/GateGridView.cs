@@ -8,11 +8,8 @@ namespace SecuritySampleApp
     {
         #region Constant Fields
         const int relativeLayoutPadding = 10;
-        readonly Button _lanesButton, _aboutButton;
-        #endregion
-
-        #region Fields
-        string _contentTitle;
+        readonly GateGridViewImageButton _lanesButton, _aboutButton;
+        readonly string _contentTitle;
         #endregion
 
         #region Constructors
@@ -20,46 +17,24 @@ namespace SecuritySampleApp
         {
             _contentTitle = pageNumber;
 
-            var lanesLabel = new Label
-            {
-                Text = "Lanes",
-                Style = StylesConstants.LabelStyle
-            };
+            var lanesLabel = new GateGridViewLabel("Lanes");
 
-            _lanesButton = new Button
-            {
-                Image = "Road",
-                Style = StylesConstants.ButtonStyle
-            };
+            _lanesButton = new GateGridViewImageButton("Road");
             _lanesButton.Clicked += OnLanesButtonClicked;
 
-            var aboutLabel = new Label
-            {
-                Text = "About",
-                Style = StylesConstants.LabelStyle,
-            };
+            var aboutLabel = new GateGridViewLabel("About");
 
-            _aboutButton = new Button
-            {
-                Image = "About",
-                Style = StylesConstants.ButtonStyle,
-            };
+            _aboutButton = new GateGridViewImageButton("About");
             _aboutButton.Clicked += OnAboutButtonClicked;
 
-            var titleLabel = new Label
-            {
-                Text = $"{pageNumber} of {numberOfPages}",
-                Style = StylesConstants.LabelStyle
-            };
+            var titleLabel = new GateGridViewLabel($"{pageNumber} of {numberOfPages}");
 
-            var enableSwitchText = new Label
-            {
-                Text = "Disable Buttons",
-                Style = StylesConstants.LabelStyle
-            };
+            var enableSwitchText = new GateGridViewLabel("Disable Buttons");
+
             var enableSwitchButton = new Switch
             {
-                Style = StylesConstants.ButtonStyle
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                BackgroundColor = Color.Transparent
             };
             enableSwitchButton.Toggled += ToggleAllButtons;
 
@@ -74,9 +49,6 @@ namespace SecuritySampleApp
             };
 
             var mainRelativeLayout = new RelativeLayout();
-
-            Func<RelativeLayout, double> getswitchStackHorizonalWidth = (p) => switchStackHorizontal.Measure(p.Width, p.Height).Request.Width;
-            Func<RelativeLayout, double> getTitleLabelWidth = (p) => titleLabel.Measure(p.Width, p.Height).Request.Width;
 
             mainRelativeLayout.Children.Add(lanesLabel,
                                             Constraint.RelativeToParent((parent) => parent.Width / 8),
@@ -104,14 +76,9 @@ namespace SecuritySampleApp
                                             Constraint.RelativeToView(switchStackHorizontal, (parent, view) => view.Y + view.Height + relativeLayoutPadding * 4));
 
             Content = mainRelativeLayout;
-        }
-        #endregion
 
-        #region Finalizers
-        ~GateGridView()
-        {
-            _aboutButton.Clicked -= OnAboutButtonClicked;
-            _lanesButton.Clicked -= OnLanesButtonClicked;
+            double getswitchStackHorizonalWidth(RelativeLayout p) => switchStackHorizontal.Measure(p.Width, p.Height).Request.Width;
+            double getTitleLabelWidth(RelativeLayout p) => titleLabel.Measure(p.Width, p.Height).Request.Width;
         }
         #endregion
 
@@ -122,11 +89,33 @@ namespace SecuritySampleApp
             _lanesButton.IsEnabled = !_lanesButton.IsEnabled;
         }
 
-		async void OnLanesButtonClicked(object sender, EventArgs e) =>
-			await Navigation.PushAsync(new LanesPage(_contentTitle));
+        async void OnLanesButtonClicked(object sender, EventArgs e) =>
+            await Navigation.PushAsync(new LanesPage(_contentTitle));
 
-		async void OnAboutButtonClicked(object sender, EventArgs e) =>
-			await Navigation.PushAsync(new AboutPage(_contentTitle));
+        async void OnAboutButtonClicked(object sender, EventArgs e) =>
+            await Navigation.PushAsync(new AboutPage(_contentTitle));
+        #endregion
+
+        #region Classes
+        class GateGridViewLabel : Label
+        {
+            public GateGridViewLabel(string text)
+            {
+                Text = text;
+                HorizontalOptions = LayoutOptions.Center;
+                BackgroundColor = Color.Transparent;
+            }
+        }
+
+        class GateGridViewImageButton : ImageButton
+        {
+            public GateGridViewImageButton(string iconImageSource)
+            {
+                Source = iconImageSource;
+                HorizontalOptions = LayoutOptions.CenterAndExpand;
+                BackgroundColor = Color.Transparent;
+            }
+        }
         #endregion
     }
 }

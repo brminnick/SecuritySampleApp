@@ -1,8 +1,8 @@
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace SecuritySampleApp
 {
-	public class AboutPage : BaseContentPage
+	class AboutPage : BaseContentPage
     {
 		public AboutPage(string pageTitle)
 		{
@@ -23,7 +23,7 @@ namespace SecuritySampleApp
 				}
 			};
 
-			NavigationPage.SetTitleIcon(this, "About_navigation");
+			NavigationPage.SetTitleIconImageSource(this, "About_navigation");
 
 			Padding = GetPageThickness();
 
