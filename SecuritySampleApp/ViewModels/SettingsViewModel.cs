@@ -33,7 +33,7 @@ namespace SecuritySampleApp
 
         #region Properties
         public ICommand IconToggleButtonCommand => _iconToggleButtonCommand ??
-            (_iconToggleButtonCommand = new AsyncCommand(ExecuteIconToggleButtonCommand, continueOnCapturedContext: false));
+            (_iconToggleButtonCommand = new AsyncCommand(ExecuteIconToggleButtonCommand));
 
         public bool IsOpen
         {
@@ -80,7 +80,7 @@ namespace SecuritySampleApp
             }
         }
 
-        async Task ExecuteIconToggleButtonCommand()
+        Task ExecuteIconToggleButtonCommand()
         {
             _timerEnabled = !_timerEnabled;
 
@@ -89,7 +89,7 @@ namespace SecuritySampleApp
             else
                 ToggleButtonText = _iconToggleDisabled;
 
-            await ToggleImage().ConfigureAwait(false);
+            return ToggleImage();
         }
         #endregion
     }

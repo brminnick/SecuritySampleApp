@@ -38,9 +38,10 @@
         <CodesignKey>iPhone Developer</CodesignKey>
         <MtouchFloat32>true</MtouchFloat32>
         <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-        <MtouchArch>ARMv7, ARM64</MtouchArch>
+        <MtouchArch>ARM64</MtouchArch>
         <PlatformTarget>x86</PlatformTarget>
         <AssemblyName>SecuritySampleApp</AssemblyName>
+        <MtouchUseLlvm>true</MtouchUseLlvm>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
         <Optimize>true</Optimize>
@@ -52,6 +53,8 @@
         <MtouchLink>None</MtouchLink>
         <MtouchArch>x86_64</MtouchArch>
         <PlatformTarget>x86</PlatformTarget>
+        <MtouchUseLlvm>true</MtouchUseLlvm>
+        <MtouchFloat32>true</MtouchFloat32>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
         <DebugSymbols>true</DebugSymbols>
@@ -76,14 +79,13 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="System" />
-        <Reference Include="System.Xml" />
-        <Reference Include="System.Core" />
         <Reference Include="Xamarin.iOS" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Xamarin.Forms" Version="4.0.0.497661" />
+        <PackageReference Include="Xamarin.Forms" Version="4.1.0.555618" />
         <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
-        <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="3.0.0-pre1" />
+        <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="3.0.0-pre2" />
+        <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     </ItemGroup>
     <ItemGroup>
         <ImageAsset Include="Assets.xcassets\AppIcons.appiconset\Contents.json">
