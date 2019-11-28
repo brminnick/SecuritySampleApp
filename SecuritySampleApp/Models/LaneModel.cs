@@ -8,7 +8,7 @@ namespace SecuritySampleApp
         readonly string _ipAddressKey;
         readonly string _needsMaintenanceKey;
 
-        public LaneModel(int id)
+        public LaneModel(in int id)
         {
             ID = id;
 

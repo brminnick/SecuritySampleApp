@@ -6,14 +6,11 @@ namespace SecuritySampleApp
 {
     public class GateGridView : ContentView
     {
-        #region Constant Fields
         const int relativeLayoutPadding = 10;
         readonly GateGridViewImageButton _lanesButton, _aboutButton;
         readonly string _contentTitle;
-        #endregion
 
-        #region Constructors
-        public GateGridView(string pageNumber, int numberOfPages)
+        public GateGridView(in string pageNumber, in int numberOfPages)
         {
             _contentTitle = pageNumber;
 
@@ -80,9 +77,7 @@ namespace SecuritySampleApp
             double getswitchStackHorizonalWidth(RelativeLayout p) => switchStackHorizontal.Measure(p.Width, p.Height).Request.Width;
             double getTitleLabelWidth(RelativeLayout p) => titleLabel.Measure(p.Width, p.Height).Request.Width;
         }
-        #endregion
 
-        #region Methods
         void ToggleAllButtons(object sender, EventArgs e)
         {
             _aboutButton.IsEnabled = !_aboutButton.IsEnabled;
@@ -94,12 +89,10 @@ namespace SecuritySampleApp
 
         async void OnAboutButtonClicked(object sender, EventArgs e) =>
             await Navigation.PushAsync(new AboutPage(_contentTitle));
-        #endregion
 
-        #region Classes
         class GateGridViewLabel : Label
         {
-            public GateGridViewLabel(string text)
+            public GateGridViewLabel(in string text)
             {
                 Text = text;
                 HorizontalOptions = LayoutOptions.Center;
@@ -109,14 +102,13 @@ namespace SecuritySampleApp
 
         class GateGridViewImageButton : ImageButton
         {
-            public GateGridViewImageButton(string iconImageSource)
+            public GateGridViewImageButton(in string iconImageSource)
             {
                 Source = iconImageSource;
                 HorizontalOptions = LayoutOptions.CenterAndExpand;
                 BackgroundColor = Color.Transparent;
             }
         }
-        #endregion
     }
 }
 

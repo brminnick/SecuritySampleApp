@@ -2,29 +2,22 @@
 
 namespace SecuritySampleApp
 {
-	class GatePage : BaseContentPage
+    class GatePage : BaseContentPage
     {
-		public GatePage(string pageTitle, int numberOfPages)
-		{
-			var gateGridView = new GateGridView(pageTitle, numberOfPages);
+        public GatePage(in string pageTitle, in int numberOfPages)
+        {
+            Padding = GetPageThickness();
 
-			Padding = GetPageThickness();
+            Title = pageTitle;
 
-			Title = pageTitle;
+            Content = new GateGridView(pageTitle, numberOfPages);
+        }
 
-			Content = gateGridView;
-		}
-
-		Thickness GetPageThickness()
-		{
-			switch (Device.RuntimePlatform)
-			{
-				case Device.iOS:
-					return new Thickness(10, 30, 10, 5);
-				default:
-					return new Thickness(10, 10, 10, 5);
-			}
-		}
-	}
+        Thickness GetPageThickness() => Device.RuntimePlatform switch
+        {
+            Device.iOS => new Thickness(10, 30, 10, 5),
+            _ => new Thickness(10, 10, 10, 5),
+        };
+    }
 }
 

@@ -7,21 +7,16 @@ namespace SecuritySampleApp
 {
     class SettingsViewModel : BaseViewModel
     {
-        #region Constant Fields
         const string _iconToggleDisabled = "Icon Toggle Disabled";
         const string _iconToggleEnabled = "Icon Toggle Enabled";
         const string _roadIconName = "Road";
         const string _aboutIconName = "About";
         readonly LaneModel _laneModel;
-        #endregion
 
-        #region Fields
         bool _timerEnabled;
         string _imageCellIcon, _toggleButtonText = _iconToggleDisabled;
-        ICommand _iconToggleButtonCommand;
-        #endregion
+        ICommand? _iconToggleButtonCommand;
 
-        #region Constructors
         public SettingsViewModel(LaneModel laneModelTapped)
         {
             _laneModel = laneModelTapped;
@@ -29,11 +24,8 @@ namespace SecuritySampleApp
             _toggleButtonText = _iconToggleDisabled;
             _imageCellIcon = _aboutIconName;
         }
-        #endregion
 
-        #region Properties
-        public ICommand IconToggleButtonCommand => _iconToggleButtonCommand ??
-            (_iconToggleButtonCommand = new AsyncCommand(ExecuteIconToggleButtonCommand));
+        public ICommand IconToggleButtonCommand => _iconToggleButtonCommand ??= new AsyncCommand(ExecuteIconToggleButtonCommand);
 
         public bool IsOpen
         {
@@ -64,9 +56,7 @@ namespace SecuritySampleApp
             get => _toggleButtonText;
             set => SetProperty(ref _toggleButtonText, value);
         }
-        #endregion
 
-        #region Methods
         async Task ToggleImage()
         {
             while (_timerEnabled)
@@ -75,7 +65,7 @@ namespace SecuritySampleApp
                     ImageCellIcon = _roadIconName;
                 else
                     ImageCellIcon = _aboutIconName;
-                
+
                 await Task.Delay(2000).ConfigureAwait(false);
             }
         }
@@ -91,6 +81,5 @@ namespace SecuritySampleApp
 
             return ToggleImage();
         }
-        #endregion
     }
 }

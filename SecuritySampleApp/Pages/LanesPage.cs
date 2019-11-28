@@ -4,51 +4,44 @@ namespace SecuritySampleApp
 {
     class LanesPage : BaseContentPage
     {
-        #region Constant Fields
-        readonly ListView _listView;
-        #endregion
-
-        #region Constructors
         public LanesPage(string pageTitle)
         {
             BindingContext = new LanesViewModel();
 
-            _listView = new ListView
+            var listView = new ListView
             {
                 RowHeight = 200,
                 ItemTemplate = new DataTemplate(typeof(LanesViewCell)),
                 IsPullToRefreshEnabled = true,
             };
-            _listView.ItemTapped += OnListViewItemTapped;
-            _listView.SetBinding(ListView.ItemsSourceProperty, nameof(LanesViewModel.LanesList));
-            _listView.SetBinding(ListView.IsRefreshingProperty, nameof(LanesViewModel.IsRefreshing));
-            _listView.SetBinding(ListView.RefreshCommandProperty, nameof(LanesViewModel.RefreshCommand));
+            listView.ItemTapped += OnListViewItemTapped;
+            listView.SetBinding(ListView.ItemsSourceProperty, nameof(LanesViewModel.LanesCollection));
+            listView.SetBinding(ListView.IsRefreshingProperty, nameof(LanesViewModel.IsRefreshing));
+            listView.SetBinding(ListView.RefreshCommandProperty, nameof(LanesViewModel.RefreshCommand));
 
             Title = $"Lanes {pageTitle}";
 
-            NavigationPage.SetTitleIconImageSource(this, "Road_navigation");
+            IconImageSource = "Road_navigation";
 
-            Content = _listView;
+            Content = listView;
         }
-        #endregion
 
-        #region Methods
         protected override void OnAppearing()
         {
             base.OnAppearing();
 
-            _listView.BeginRefresh();
+            var listView = (ListView)Content;
+            listView.BeginRefresh();
         }
 
         async void OnListViewItemTapped(object sender, ItemTappedEventArgs e)
         {
-            if (sender is ListView listView)
-                listView.SelectedItem = null;
+            var listView = (ListView)sender;
+            listView.SelectedItem = null;
 
-            if (e.Item is LaneModel laneModelTapped)
-                await Navigation.PushAsync(new SettingsPage(laneModelTapped));
+            var laneModelTapped = (LaneModel)e.Item;
+            await Navigation.PushAsync(new SettingsPage(laneModelTapped));
         }
-        #endregion
     }
 }
 

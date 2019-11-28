@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using AsyncAwaitBestPractices.MVVM;
@@ -8,15 +8,10 @@ namespace SecuritySampleApp
 {
     class LanesViewModel : BaseViewModel
     {
-        #region Fields
         bool _isRefreshing;
-        ICommand _refreshCommand;
-        List<LaneModel> _lanesList;
-        #endregion
+        ICommand? _refreshCommand;
 
-        #region Properties
-        public ICommand RefreshCommand => _refreshCommand ??
-            (_refreshCommand = new AsyncCommand(ExecuteRefreshCommand, continueOnCapturedContext: false));
+        public ICommand RefreshCommand => _refreshCommand ??= new AsyncCommand(ExecuteRefreshCommand);
 
         public bool IsRefreshing
         {
@@ -24,34 +19,31 @@ namespace SecuritySampleApp
             set => SetProperty(ref _isRefreshing, value);
         }
 
-        public List<LaneModel> LanesList
-        {
-            get => _lanesList;
-            set => SetProperty(ref _lanesList, value);
-        }
-        #endregion
+        public ObservableCollection<LaneModel> LanesCollection { get; } = new ObservableCollection<LaneModel>();
 
-        #region Methods
         async Task ExecuteRefreshCommand()
         {
-            var minimumRefreshTimeTask = Task.Delay(500);
+            LanesCollection.Clear();
 
             try
             {
-                LanesList = CreateLanes().ToList();
+                await foreach (var lane in CreateLanes().ConfigureAwait(false))
+                {
+                    LanesCollection.Add(lane);
+                }
             }
             finally
             {
-                await minimumRefreshTimeTask.ConfigureAwait(false);
                 IsRefreshing = false;
             }
         }
 
-        IEnumerable<LaneModel> CreateLanes()
+        async IAsyncEnumerable<LaneModel> CreateLanes()
         {
             for (int i = 0; i < 5; i++)
                 yield return new LaneModel(i);
+
+            await Task.Delay(1000).ConfigureAwait(false);
         }
-        #endregion
     }
 }
