@@ -6,7 +6,6 @@ using Xamarin.Forms.Platform.iOS;
 using SecuritySampleApp.iOS;
 
 [assembly: ExportRenderer(typeof(ViewCell), typeof(ViewCellItemSelectedCustomRenderer))]
-
 namespace SecuritySampleApp.iOS
 {
     public class ViewCellItemSelectedCustomRenderer : ViewCellRenderer
