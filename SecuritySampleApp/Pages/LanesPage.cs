@@ -1,4 +1,7 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using Xamarin.Forms;
 
 namespace SecuritySampleApp
 {
@@ -8,39 +11,45 @@ namespace SecuritySampleApp
         {
             BindingContext = new LanesViewModel();
 
-            var listView = new ListView
+            var collectionView = new CollectionView
             {
-                RowHeight = 200,
-                ItemTemplate = new DataTemplate(typeof(LanesViewCell)),
-                IsPullToRefreshEnabled = true,
+                ItemTemplate = new LanesDataTemplate(),
+                SelectionMode= SelectionMode.Single,
             };
-            listView.ItemTapped += OnListViewItemTapped;
-            listView.SetBinding(ListView.ItemsSourceProperty, nameof(LanesViewModel.LanesCollection));
-            listView.SetBinding(ListView.IsRefreshingProperty, nameof(LanesViewModel.IsRefreshing));
-            listView.SetBinding(ListView.RefreshCommandProperty, nameof(LanesViewModel.RefreshCommand));
+            collectionView.SelectionChanged += HandleSelectionChanged;
+            collectionView.SetBinding(CollectionView.ItemsSourceProperty, nameof(LanesViewModel.LanesCollection));
+
+            var refreshView = new RefreshView
+            {
+                Content = collectionView
+            };
+            refreshView.SetBinding(RefreshView.CommandProperty, nameof(LanesViewModel.RefreshCommand));
+            refreshView.SetBinding(RefreshView.IsRefreshingProperty, nameof(LanesViewModel.IsRefreshing));
 
             Title = $"Lanes {pageTitle}";
 
             IconImageSource = "Road_navigation";
 
-            Content = listView;
+            Content = refreshView;
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
 
-            var listView = (ListView)Content;
-            listView.BeginRefresh();
+            if (Content is RefreshView refreshView)
+            {
+                refreshView.IsRefreshing = true;
+            }
         }
 
-        async void OnListViewItemTapped(object sender, ItemTappedEventArgs e)
+        async void HandleSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var listView = (ListView)sender;
-            listView.SelectedItem = null;
+            var collectionView = (CollectionView)sender;
+            collectionView.SelectedItem = null;
 
-            var laneModelTapped = (LaneModel)e.Item;
-            await Navigation.PushAsync(new SettingsPage(laneModelTapped));
+            if (e.CurrentSelection.FirstOrDefault() is LaneModel laneModelTapped)
+                await Navigation.PushAsync(new SettingsPage(laneModelTapped));
         }
     }
 }

@@ -40,7 +40,8 @@ namespace SecuritySampleApp
                 Intent = TableIntent.Settings,
                 Root = new TableRoot
                 {
-                    new TableSection{
+                    new TableSection
+                    {
                         isOpenSwitch,
                         needsMaintenanceSwitch,
                         ipAddressText,
@@ -51,7 +52,8 @@ namespace SecuritySampleApp
 
             var settingsStack = new StackLayout
             {
-                Children ={
+                Children =
+                {
                     tableView,
                     iconToggleButton
                 }

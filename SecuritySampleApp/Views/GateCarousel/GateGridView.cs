@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace SecuritySampleApp
 {
-    public class GateGridView : ContentView
+    public class GateGridView : RelativeLayout
     {
         const int relativeLayoutPadding = 10;
         readonly GateGridViewImageButton _lanesButton, _aboutButton;
@@ -45,34 +45,30 @@ namespace SecuritySampleApp
                 }
             };
 
-            var mainRelativeLayout = new RelativeLayout();
-
-            mainRelativeLayout.Children.Add(lanesLabel,
+            Children.Add(lanesLabel,
                                             Constraint.RelativeToParent((parent) => parent.Width / 8),
                                             Constraint.RelativeToParent((parent) => parent.Y + relativeLayoutPadding),
                                             Constraint.RelativeToParent((parent) => parent.Width / 4));
-            mainRelativeLayout.Children.Add(_lanesButton,
+            Children.Add(_lanesButton,
                                             Constraint.RelativeToParent((parent) => parent.Width / 8),
                                             Constraint.RelativeToView(lanesLabel, (parent, view) => view.Y + view.Height + relativeLayoutPadding),
                                             Constraint.RelativeToParent((parent) => parent.Width / 4),
                                             Constraint.Constant(100));
-            mainRelativeLayout.Children.Add(aboutLabel,
+            Children.Add(aboutLabel,
                                             Constraint.RelativeToParent((parent) => parent.Width * 5 / 8),
                                             Constraint.RelativeToParent((parent) => parent.Y + relativeLayoutPadding),
                                             Constraint.RelativeToParent((parent) => parent.Width / 4));
-            mainRelativeLayout.Children.Add(_aboutButton,
+            Children.Add(_aboutButton,
                                             Constraint.RelativeToParent((parent) => parent.Width * 5 / 8),
                                             Constraint.RelativeToView(lanesLabel, (parent, view) => view.Y + view.Height + relativeLayoutPadding),
                                             Constraint.RelativeToParent((parent) => parent.Width / 4),
                                             Constraint.Constant(100));
-            mainRelativeLayout.Children.Add(switchStackHorizontal,
+            Children.Add(switchStackHorizontal,
                                             Constraint.RelativeToParent((parent) => parent.Width / 2 - getswitchStackHorizonalWidth(parent) / 2),
                                             Constraint.RelativeToView(_lanesButton, (parent, view) => view.Y + view.Height + relativeLayoutPadding * 4));
-            mainRelativeLayout.Children.Add(titleLabel,
+            Children.Add(titleLabel,
                                             Constraint.RelativeToParent((parent) => parent.Width / 2 - getTitleLabelWidth(parent) / 2),
                                             Constraint.RelativeToView(switchStackHorizontal, (parent, view) => view.Y + view.Height + relativeLayoutPadding * 4));
-
-            Content = mainRelativeLayout;
 
             double getswitchStackHorizonalWidth(RelativeLayout p) => switchStackHorizontal.Measure(p.Width, p.Height).Request.Width;
             double getTitleLabelWidth(RelativeLayout p) => titleLabel.Measure(p.Width, p.Height).Request.Width;
