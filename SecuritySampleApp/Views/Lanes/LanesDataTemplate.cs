@@ -1,4 +1,6 @@
 ﻿using Xamarin.Forms;
+using Xamarin.Forms.Markup;
+using static Xamarin.Forms.Markup.GridRowsColumns;
 
 namespace SecuritySampleApp
 {
@@ -8,66 +10,51 @@ namespace SecuritySampleApp
         {
         }
 
-        static Grid CreateLanes()
+        static Grid CreateLanes() => new Grid
         {
-            var laneImage = new Image
+            RowDefinitions = Rows.Define(
+                    (Row.Text, Star),
+                    (Row.Switch, Star)),
+
+            ColumnDefinitions = Columns.Define(
+                    (Column.Image, Star),
+                    (Column.Open, Star),
+                    (Column.Maintenance, Star)),
+
+            Children =
             {
-                HeightRequest = 150,
-                BackgroundColor = Color.White,
-                Source = "Road"
-            };
+                new LaneImage().RowSpan(All<Row>()).Column(Column.Image),
 
-            var isOpenTextLabel = new Label
+                new TextLabel("Is Open").Row(Row.Text).Column(Column.Open),
+                new Switch().Row(Row.Switch).Column(Column.Open)
+                    .Bind(Switch.IsToggledProperty, nameof(LaneModel.IsOpen)),
+
+                new TextLabel("Needs Maintanence").Row(Row.Text).Column(Column.Maintenance),
+                new Switch().Row(Row.Switch).Column(Column.Maintenance)
+                    .Bind(Switch.IsToggledProperty, nameof(LaneModel.NeedsMaintenance)),
+            }
+        };
+
+        enum Column { Image, Open, Maintenance }
+        enum Row { Text, Switch }
+
+        class LaneImage : Image
+        {
+            public LaneImage()
             {
-                Text = "Is Open",
-                FontAttributes = FontAttributes.Bold
-            };
-            var isOpenSwitch = new Switch();
-            isOpenSwitch.SetBinding(Switch.IsToggledProperty, nameof(LaneModel.IsOpen));
+                HeightRequest = 150;
+                BackgroundColor = Color.White;
+                Source = "Road";
+            }
+        }
 
-            var isOpenStack = new StackLayout
+        class TextLabel : Label
+        {
+            public TextLabel(in string text)
             {
-                Children = {
-                    isOpenTextLabel,
-                    isOpenSwitch
-                },
-                Style = StylesConstants.StackLayoutStyle
-            };
-
-            var needsMaintenanceTextLabel = new Label
-            {
-                Text = "Needs Maintenance",
-                FontAttributes = FontAttributes.Bold
-            };
-            var needsMaintenanceSwitch = new Switch();
-            needsMaintenanceSwitch.SetBinding(Switch.IsToggledProperty, nameof(LaneModel.NeedsMaintenance));
-
-            var needsMaintenanceStack = new StackLayout
-            {
-                Children = {
-                    needsMaintenanceTextLabel,
-                    needsMaintenanceSwitch
-                },
-                Style = StylesConstants.StackLayoutStyle
-            };
-
-            var gridLayout = new Grid
-            {
-                RowDefinitions = {
-                    new RowDefinition{ Height = new GridLength (1, GridUnitType.Star) },
-                },
-                ColumnDefinitions = {
-                    new ColumnDefinition{ Width = new GridLength (1, GridUnitType.Star) },
-                    new ColumnDefinition{ Width = new GridLength (1, GridUnitType.Star) },
-                    new ColumnDefinition{ Width = new GridLength (1, GridUnitType.Star) },
-                }
-            };
-
-            gridLayout.Children.Add(laneImage, 0, 0);
-            gridLayout.Children.Add(isOpenStack, 1, 0);
-            gridLayout.Children.Add(needsMaintenanceStack, 2, 0);
-
-            return gridLayout;
+                Text = text;
+                FontAttributes = FontAttributes.Bold;
+            }
         }
     }
 }

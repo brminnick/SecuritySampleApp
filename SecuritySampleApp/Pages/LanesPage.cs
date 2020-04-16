@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Linq;
 using Xamarin.Forms;
+using Xamarin.Forms.Markup;
 
 namespace SecuritySampleApp
 {
@@ -11,26 +10,23 @@ namespace SecuritySampleApp
         {
             BindingContext = new LanesViewModel();
 
-            var collectionView = new CollectionView
-            {
-                ItemTemplate = new LanesDataTemplate(),
-                SelectionMode= SelectionMode.Single,
-            };
-            collectionView.SelectionChanged += HandleSelectionChanged;
-            collectionView.SetBinding(CollectionView.ItemsSourceProperty, nameof(LanesViewModel.LanesCollection));
-
-            var refreshView = new RefreshView
-            {
-                Content = collectionView
-            };
-            refreshView.SetBinding(RefreshView.CommandProperty, nameof(LanesViewModel.RefreshCommand));
-            refreshView.SetBinding(RefreshView.IsRefreshingProperty, nameof(LanesViewModel.IsRefreshing));
-
             Title = $"Lanes {pageTitle}";
 
             IconImageSource = "Road_navigation";
 
-            Content = refreshView;
+            Content = new RefreshView
+            {
+                Content = new CollectionView
+                {
+                    ItemTemplate = new LanesDataTemplate(),
+                    SelectionMode = SelectionMode.Single,
+                }.Assign(out CollectionView collectionView)
+                 .Bind(CollectionView.ItemsSourceProperty, nameof(LanesViewModel.LanesCollection))
+
+            }.Bind(RefreshView.CommandProperty, nameof(LanesViewModel.RefreshCommand))
+             .Bind(RefreshView.IsRefreshingProperty, nameof(LanesViewModel.IsRefreshing));
+
+            collectionView.SelectionChanged += HandleSelectionChanged;
         }
 
         protected override void OnAppearing()
