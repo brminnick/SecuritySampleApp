@@ -22,7 +22,8 @@ namespace SecuritySampleApp
 			};
 			var mainCarouselPage = new CarouselPage
 			{
-				Children = {
+				Children =
+				{
 					carouselPage1,
 					carouselPage2,
 					carouselPage3
