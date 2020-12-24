@@ -8,7 +8,7 @@
         <OutputType>Library</OutputType>
         <RootNamespace>SecuritySampleApp.Droid</RootNamespace>
         <AssemblyName>SecuritySampleApp.Droid</AssemblyName>
-        <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
+        <TargetFrameworkVersion>v11.0</TargetFrameworkVersion>
         <AndroidApplication>True</AndroidApplication>
         <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
         <AndroidResgenClass>Resource</AndroidResgenClass>
@@ -30,8 +30,7 @@
         <ConsolePause>false</ConsolePause>
         <AndroidLinkMode>None</AndroidLinkMode>
         <AndroidSupportedAbis>arm64-v8a;armeabi-v7a;x86;x86_64</AndroidSupportedAbis>
-        <EmbedAssembliesIntoApk>
-        </EmbedAssembliesIntoApk>
+        <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
         <AndroidFastDeploymentType>
         </AndroidFastDeploymentType>
         <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
@@ -60,9 +59,9 @@
         <Reference Include="Mono.Android" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Xamarin.Forms" Version="4.6.0.616-pre4" />
-        <PackageReference Include="Xamarin.Essentials" Version="1.5.2" />
-        <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="4.1.1-pre1" />
+        <PackageReference Include="Xamarin.Forms" Version="5.0.0.1829-pre6" />
+        <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />
+        <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="5.0.2" />
         <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     </ItemGroup>
     <ItemGroup>

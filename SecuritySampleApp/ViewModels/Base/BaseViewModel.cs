@@ -16,7 +16,7 @@ namespace SecuritySampleApp
             remove => _propertyChangedEventManager.RemoveEventHandler(value);
         }
 
-        protected void SetProperty<T>(ref T backingStore, in T value, in Action onChanged = null, [CallerMemberName] in string propertyname = "")
+        protected void SetProperty<T>(ref T backingStore, in T value, in Action? onChanged = null, [CallerMemberName] in string propertyname = "")
         {
             if (EqualityComparer<T>.Default.Equals(backingStore, value))
                 return;
@@ -29,6 +29,6 @@ namespace SecuritySampleApp
         }
 
         void OnPropertyChanged([CallerMemberName]in string name = "") =>
-            _propertyChangedEventManager.HandleEvent(this, new PropertyChangedEventArgs(name), nameof(INotifyPropertyChanged.PropertyChanged));
+            _propertyChangedEventManager.RaiseEvent(this, new PropertyChangedEventArgs(name), nameof(INotifyPropertyChanged.PropertyChanged));
     }
 }

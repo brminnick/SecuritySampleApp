@@ -6,8 +6,6 @@ namespace SecuritySampleApp
 	{
 		public App()
 		{
-			Device.SetFlags(new[] { "Markup_Experimental" });
-
 			var carouselPage1 = new GatePage("Page 1", 3)
 			{
 				BackgroundColor = Color.Maroon

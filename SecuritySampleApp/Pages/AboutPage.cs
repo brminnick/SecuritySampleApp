@@ -6,30 +6,20 @@ namespace SecuritySampleApp
     {
         public AboutPage(in string pageTitle)
         {
-            var aboutLabel = new Label
-            {
-                Text = "Sample App Made By"
-            };
-            var xamarinImage = new Image
-            {
-                Source = "xamarinlogo"
-            };
-
-            var aboutStack = new StackLayout
-            {
-                Children = {
-                    aboutLabel,
-                    xamarinImage
-                }
-            };
-
             IconImageSource = "About_navigation";
 
             Padding = GetPageThickness();
 
             Title = $"About {pageTitle}";
 
-            Content = aboutStack;
+            Content = new StackLayout
+            {
+                Children =
+                {
+                    new Label { Text = "Sample App Made By" },
+                    new Image { Source = "xamarinlogo" }
+                }
+            };
         }
 
         Thickness GetPageThickness() => Device.RuntimePlatform switch

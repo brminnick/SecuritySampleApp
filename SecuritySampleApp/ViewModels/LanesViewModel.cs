@@ -19,7 +19,7 @@ namespace SecuritySampleApp
             set => SetProperty(ref _isRefreshing, value);
         }
 
-        public ObservableCollection<LaneModel> LanesCollection { get; } = new ObservableCollection<LaneModel>();
+        public ObservableCollection<LaneModel> LanesCollection { get; } = new();
 
         async Task ExecuteRefreshCommand()
         {

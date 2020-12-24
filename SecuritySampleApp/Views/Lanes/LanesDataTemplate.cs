@@ -1,10 +1,10 @@
 ﻿using Xamarin.Forms;
-using Xamarin.Forms.Markup;
-using static Xamarin.Forms.Markup.GridRowsColumns;
+using Xamarin.CommunityToolkit.Markup;
+using static Xamarin.CommunityToolkit.Markup.GridRowsColumns;
 
 namespace SecuritySampleApp
 {
-    public class LanesDataTemplate : DataTemplate
+    class LanesDataTemplate : DataTemplate
     {
         public LanesDataTemplate() : base(CreateLanes)
         {
